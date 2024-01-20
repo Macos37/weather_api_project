@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    environment:
+      - .env
+    ports:
+      - 8000:8000
+    depends_on:
+      - bot
+    networks:
+      - appnetwork
+
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    environment:
+      - .env
+    command: python bot.py
+    networks:
+      - appnetwork
+
+networks:
+  appnetwork:
